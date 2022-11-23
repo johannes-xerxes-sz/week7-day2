@@ -1,78 +1,77 @@
-//Given this array: 
 const arr = [12, 3, 14, 18, 2, 7, 9]
 // Start by visualizing the sorting algorithm and solve without looking at the class notes!
 // Please sort from smallest to largest using:
 
-const javaScriptMethod = (arr) => {
-    
-    let numbers = arr;
-    numbers.sort(function(a, b) {
-        if (a > b) return 1;
-        if (a < b) return -1;
-        });
-        return numbers
-}
-console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-console.log('javascriptMethod: ')
-console.log(javaScriptMethod(arr))
-console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-') 
-
-const bubbleSortMethod = (arr) => {
-
-    for (let k = 0; k <= arr.length-1; k++) {
-        for (let i = 0; i < ( arr.length - k -1); i++) {
-            if (arr[i] > arr[i + 1])
-            {
-                let temp = arr[i];
-                arr[i] = arr[i+1]
-                arr[i+1] = temp;
-            }
-        }    
-
-    }
-    console.log(arr);
+/* const mergeSortMethod = (arr) => {
+    if ( arr.length <= 1) return arr;
+    let middle = Math.floor(arr.length/2);
+    let left = mergeSortMethod(arr.slice(0, middle));
+    let right = mergeSortMethod(arr.slice(middle));
+    return merge(left, right)
 
 }
-console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-console.log('bubbleSortMethod: ')
-console.log(bubbleSortMethod(arr))
-console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
 
-const selectionSortMethod = (arr) => {
+const merge = ( left, right) => {
+    newArr = []
+    let i = 0, j =0;
 
-    for (let k = 0; k <= arr.length; k++) {
-        let min = k;
-        for(let i = k + 1; i < arr.length; i++) {
-            if (arr[i] < arr[min]) {
-                min = i;
-            }
+    while (i < left.length && j < right.length) {
+        if (right[j] > left [i]) {
+            newArr.push(left[i])
+            i++; 
+        } else {
+            newArr.push(right[j]);
+            j++;
         }
-            if (min != k) {
-                [arr[k], arr[min]] = [arr[min], arr[k]]           
-            }
-        
     }
-    console.log(arr);
+    while (i < left.length) {
+        newArr.push(left[i])
+        i++;
+    }
+    while (j < right.length) {
+        newArr.push(right[j])
+        j++;
+    }
+    return newArr
+
 }
 console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-console.log('selectionSortMethod: ')
-console.log(selectionSortMethod(arr))
-console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-') 
+console.log('merge: ')
+console.log(mergeSortMethod(arr))
+console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')  */
 
-const insertionSortMethod = (arr) => {
-    for (let i = 1; i < arr.length; i++) {
-        let current = arr[i]
-        let j = i - 1;
-        while (j >= 0 && arr[j] > current) {
-            arr[j + 1] = arr[j];
-            j--
+
+const quickSortMethod = (arr,  left = 0, right = arr.length - 1) => {
+
+        if (left < right) {
+          let pivotIndex = pivot(arr, left, right)
+          quickSortMethod(arr, left, pivotIndex - 1)
+          quickSortMethod(arr, pivotIndex + 1, right)
         }
-        arr[j + 1] = current
-    }
-    console.log(arr);
-
+        return arr
 }
+const pivot = (arr, start = 0, end = arr.length - 1) => {
+    const swap = (arr, index1, index2) => {
+      let temp = arr[index1]
+      arr[index1] = arr[index2]
+      arr[index2] = temp
+    }
+  
+    let pivotIndex = arr[start]
+    let swapIndex = start
+  
+    for (let i = start + 1; i <= end; i++) {
+      if (arr[i] < pivotIndex) {
+        swapIndex++
+        swap(arr, swapIndex, i)
+      }
+    }
+  
+    swap(arr, start, swapIndex)
+  
+    return swapIndex
+  }
 console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-console.log('insertionSortMethod: ')
-console.log(insertionSortMethod(arr))
+console.log('quickSortMethod: ')
+console.log(quickSortMethod(arr))
 console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
